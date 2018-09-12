@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_home">الصفحة الرئيسية</string>
+    <string name="menu_category">الفئة</string>
+    <string name="menu_follow">إتبع</string>
+    <string name="menu_cart">عربة التسوق</string>
+    <string name="menu_account">الحساب</string>
+
+    <string name="setting">ضبط</string>
+</resources>

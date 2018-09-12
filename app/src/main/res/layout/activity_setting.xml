@@ -25,4 +25,15 @@
         android:text="@string/language_english"
         android:textColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/chinese"/>
+
+    <TextView
+        android:id="@+id/arabic"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/language_arabic"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/english"/>
 </android.support.constraint.ConstraintLayout>

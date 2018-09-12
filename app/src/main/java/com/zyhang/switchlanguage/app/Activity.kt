@@ -51,6 +51,11 @@ class SettingActivity : AutoConfigLanguageActivity() {
             setResult(Activity.RESULT_OK, Intent().putExtra("locale", Locale.ENGLISH))
             finish()
         }
+
+        arabic.setOnClickListener {
+            setResult(Activity.RESULT_OK, Intent().putExtra("locale", Locale("ar")))
+            finish()
+        }
     }
 }
 
