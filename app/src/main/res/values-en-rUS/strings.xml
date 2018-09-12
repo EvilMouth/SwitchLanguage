@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_home">Home</string>
+    <string name="menu_category">Category</string>
+    <string name="menu_follow">Follow</string>
+    <string name="menu_cart">Cart</string>
+    <string name="menu_account">Account</string>
+
+    <string name="setting">Setting</string>
+</resources>
