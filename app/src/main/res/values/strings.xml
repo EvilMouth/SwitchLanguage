@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Switch Language</string>
+    <string name="app_name">Switch Language Demo</string>
 
     <string name="menu_home">首页</string>
     <string name="menu_category">类目</string>

@@ -3,6 +3,7 @@ package com.zyhang.switchlanguage;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +17,9 @@ import java.util.StringTokenizer;
  * Created by zyhang on 2018/9/12.09:29
  */
 
-class SwitchLanguageStore {
+class SwitchLanguageHelper {
+
+    private static final String TAG = "SwitchLanguageHelper";
 
     @Nullable
     private WeakReference<Activity> mRecreateActivityWeakReference;
@@ -24,23 +27,33 @@ class SwitchLanguageStore {
     private Locale mLocale;
 
     private static class LazyLoad {
-        private static final SwitchLanguageStore INSTANCE = new SwitchLanguageStore();
+        private static final SwitchLanguageHelper INSTANCE = new SwitchLanguageHelper();
     }
 
-    static SwitchLanguageStore getInstance() {
+    static SwitchLanguageHelper getInstance() {
         return LazyLoad.INSTANCE;
     }
 
-    void store(@NonNull Activity recreateActivity, @NonNull Locale locale) {
+    void startSwitch(@NonNull Activity recreateActivity, @NonNull Locale locale, long delayMillis) {
         mRecreateActivityWeakReference = new WeakReference<>(recreateActivity);
         mLocale = locale;
 
         // store to sp
         storeLocal(recreateActivity, locale);
+
+        // start switch
+        final Context applicationContext = recreateActivity.getApplicationContext();
+        new Handler().postDelayed(() -> {
+            Activity activity = getRecreateActivity();
+            if (activity != null) {
+                activity.recreate();
+            }
+            SwitchLanguageUtils.endSwitchLanguage(applicationContext);
+        }, delayMillis);
     }
 
     @Nullable
-    Activity getActivity() {
+    private Activity getRecreateActivity() {
         return mRecreateActivityWeakReference != null ? mRecreateActivityWeakReference.get() : null;
     }
 
@@ -51,8 +64,6 @@ class SwitchLanguageStore {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static final String TAG = "SwitchLanguageStore";
-
     private static void storeLocal(@NonNull Context context, @NonNull Locale locale) {
         String languageTag;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -61,7 +72,7 @@ class SwitchLanguageStore {
             StringBuilder sb = new StringBuilder();
             sb.append(locale.getLanguage());
             if (!TextUtils.isEmpty(locale.getCountry())) {
-                sb.append(",");
+                sb.append("_");
                 sb.append(locale.getCountry());
             }
             languageTag = sb.toString();
@@ -83,7 +94,7 @@ class SwitchLanguageStore {
             return Locale.forLanguageTag(languageTag);
         } else {
             String lang = "", country = "";
-            StringTokenizer st = new StringTokenizer(languageTag, ",");
+            StringTokenizer st = new StringTokenizer(languageTag, "_");
             if (st.hasMoreTokens()) {
                 lang = st.nextToken();
             }
@@ -93,5 +104,4 @@ class SwitchLanguageStore {
             return new Locale(lang, country);
         }
     }
-
 }

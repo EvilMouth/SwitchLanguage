@@ -1,13 +1,11 @@
 package com.zyhang.switchlanguage;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
@@ -15,12 +13,11 @@ import android.support.v4.content.LocalBroadcastManager;
  * Created by zyhang on 2018/9/11.18:07
  */
 
-public class SwitchLanguageActivity extends AutoConfigLanguageActivity implements Application.ActivityLifecycleCallbacks {
+public class SwitchLanguageActivity extends AutoConfigLanguageActivity {
 
-    public static final String TAG = "SwitchLanguageActivity";
+    private static final String TAG = "SwitchLanguageActivity";
 
     private FinishBroadcastReceiver mFinishBroadcastReceiver;
-    private String mRecreateActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,17 +27,6 @@ public class SwitchLanguageActivity extends AutoConfigLanguageActivity implement
         mFinishBroadcastReceiver = new FinishBroadcastReceiver(this);
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mFinishBroadcastReceiver, new IntentFilter(TAG));
-
-        long delayMillis = getIntent().getLongExtra("delayMillis", 400);
-        Activity recreateActivity = SwitchLanguageStore.getInstance()
-                .getActivity();
-        if (recreateActivity != null) {
-            getApplication().registerActivityLifecycleCallbacks(this);
-            new Handler().postDelayed(recreateActivity::recreate, delayMillis);
-        } else {
-            // recreateActivity已经被回收，不需要手动recreate，直接返回
-            new Handler().postDelayed(this::finish, delayMillis);
-        }
     }
 
     @Override
@@ -48,8 +34,6 @@ public class SwitchLanguageActivity extends AutoConfigLanguageActivity implement
         super.onDestroy();
         LocalBroadcastManager.getInstance(this)
                 .unregisterReceiver(mFinishBroadcastReceiver);
-
-        getApplication().unregisterActivityLifecycleCallbacks(this);
     }
 
     @Override
@@ -61,6 +45,17 @@ public class SwitchLanguageActivity extends AutoConfigLanguageActivity implement
     @Override
     public void onBackPressed() {
         // disable
+    }
+
+    /**
+     * end switching language
+     * finish this activity
+     *
+     * @param context context to get localBroadcastManager
+     */
+    static void destroy(@NonNull Context context) {
+        LocalBroadcastManager.getInstance(context)
+                .sendBroadcast(new Intent(TAG));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,41 +74,5 @@ public class SwitchLanguageActivity extends AutoConfigLanguageActivity implement
                 mSwitchLanguageActivity.finish();
             }
         }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        if (savedInstanceState != null && activity.getClass().getName().equals(mRecreateActivity)) {
-            SwitchLanguageUtils.endSwitchLanguage(activity);
-        }
-    }
-
-    @Override
-    public void onActivityStarted(Activity activity) {
-    }
-
-    @Override
-    public void onActivityResumed(Activity activity) {
-    }
-
-    @Override
-    public void onActivityPaused(Activity activity) {
-    }
-
-    @Override
-    public void onActivityStopped(Activity activity) {
-    }
-
-    @Override
-    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-        if (activity == SwitchLanguageStore.getInstance().getActivity()) {
-            mRecreateActivity = activity.getClass().getName();
-        }
-    }
-
-    @Override
-    public void onActivityDestroyed(Activity activity) {
     }
 }

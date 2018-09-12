@@ -8,7 +8,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -32,7 +31,7 @@ public class SwitchLanguageUtils {
     public static Context configLanguage(@NonNull Context newBase) {
         Configuration configuration = Resources.getSystem().getConfiguration();
 
-        Locale locale = SwitchLanguageStore.getInstance()
+        Locale locale = SwitchLanguageHelper.getInstance()
                 .getLocale(newBase);
         if (locale != null) {
             configuration.setLocale(locale);
@@ -48,12 +47,11 @@ public class SwitchLanguageUtils {
      * @param locale           目标切换语言
      * @param delayMillis      动画延时
      */
-    public static void startSwitchLanguage(@NonNull Activity recreateActivity, @NonNull Locale locale, @IntRange(from = 400) long delayMillis) {
-        SwitchLanguageStore.getInstance()
-                .store(recreateActivity, locale);
+    public static void startSwitchLanguage(@NonNull Activity recreateActivity, @NonNull Locale locale, @IntRange(from = 700) long delayMillis) {
+        SwitchLanguageHelper.getInstance()
+                .startSwitch(recreateActivity, locale, delayMillis);
 
         Intent intent = new Intent(recreateActivity, SwitchLanguageActivity.class);
-        intent.putExtra("delayMillis", delayMillis);
         recreateActivity.startActivity(intent);
         recreateActivity.overridePendingTransition(R.anim.switch_b_in, R.anim.switch_a_out);
     }
@@ -64,8 +62,7 @@ public class SwitchLanguageUtils {
      * @param context context
      */
     public static void endSwitchLanguage(@NonNull Context context) {
-        LocalBroadcastManager.getInstance(context)
-                .sendBroadcast(new Intent(SwitchLanguageActivity.TAG));
+        SwitchLanguageActivity.destroy(context);
     }
 
     /**
