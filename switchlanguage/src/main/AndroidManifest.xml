@@ -9,6 +9,6 @@
         <activity
             android:name=".SwitchLanguageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/SLFullScreenTheme"/>
     </application>
 </manifest>
