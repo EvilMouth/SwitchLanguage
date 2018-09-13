@@ -2,14 +2,15 @@ package com.zyhang.switchlanguage;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import java.lang.ref.WeakReference;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
@@ -22,8 +23,6 @@ class SwitchLanguageHelper {
     private static final String TAG = "SwitchLanguageHelper";
 
     @Nullable
-    private WeakReference<Activity> mRecreateActivityWeakReference;
-    @Nullable
     private Locale mLocale;
 
     private static class LazyLoad {
@@ -34,27 +33,20 @@ class SwitchLanguageHelper {
         return LazyLoad.INSTANCE;
     }
 
-    void startSwitch(@NonNull Activity recreateActivity, @NonNull Locale locale, long delayMillis) {
-        mRecreateActivityWeakReference = new WeakReference<>(recreateActivity);
+    void startSwitch(@NonNull Locale locale, long delayMillis) {
         mLocale = locale;
-
+        // get the top activity from stack
+        Activity topActivity = ActivityDequeHelper.getInstance()
+                .getActivityDeque().getLast();
         // store to sp
-        storeLocal(recreateActivity, locale);
-
-        // start switch
-        final Context applicationContext = recreateActivity.getApplicationContext();
-        new Handler().postDelayed(() -> {
-            Activity activity = getRecreateActivity();
-            if (activity != null) {
-                activity.recreate();
-            }
-            SwitchLanguageUtils.endSwitchLanguage(applicationContext);
-        }, delayMillis);
-    }
-
-    @Nullable
-    private Activity getRecreateActivity() {
-        return mRecreateActivityWeakReference != null ? mRecreateActivityWeakReference.get() : null;
+        storeLocal(topActivity.getApplicationContext(), locale);
+        // delay recreate
+        new RecreateHandler(topActivity.getApplicationContext())
+                .sendEmptyMessageDelayed(1, delayMillis);
+        // start switch anim
+        Intent intent = new Intent(topActivity, SwitchLanguageActivity.class);
+        topActivity.startActivity(intent);
+        topActivity.overridePendingTransition(R.anim.switch_b_in, R.anim.switch_a_out);
     }
 
     @Nullable
@@ -102,6 +94,25 @@ class SwitchLanguageHelper {
                 country = st.nextToken();
             }
             return new Locale(lang, country);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static class RecreateHandler extends Handler {
+
+        private Context mApplicationContext;
+
+        private RecreateHandler(Context applicationContext) {
+            mApplicationContext = applicationContext;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            ActivityDequeHelper.getInstance()
+                    .recreateAll();
+            SwitchLanguageUtils.endSwitchLanguage(mApplicationContext);
         }
     }
 }

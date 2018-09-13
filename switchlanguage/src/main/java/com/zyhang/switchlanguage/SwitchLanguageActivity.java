@@ -45,6 +45,7 @@ public class SwitchLanguageActivity extends AutoConfigLanguageActivity {
     @Override
     public void onBackPressed() {
         // disable
+        super.onBackPressed();
     }
 
     /**

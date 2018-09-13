@@ -1,13 +1,12 @@
 package com.zyhang.switchlanguage.app
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import com.zyhang.switchlanguage.AutoConfigLanguageActivity
+import com.zyhang.switchlanguage.SwitchLanguageUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_setting.*
 import java.util.*
@@ -41,21 +40,24 @@ class SettingActivity : AutoConfigLanguageActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
+        setTitle(R.string.setting)
 
         chinese.setOnClickListener {
-            setResult(Activity.RESULT_OK, Intent().putExtra("locale", Locale.CHINA))
-            finish()
+            switch(Locale.CHINA)
         }
 
         english.setOnClickListener {
-            setResult(Activity.RESULT_OK, Intent().putExtra("locale", Locale.ENGLISH))
-            finish()
+            switch(Locale.ENGLISH)
         }
 
         arabic.setOnClickListener {
-            setResult(Activity.RESULT_OK, Intent().putExtra("locale", Locale("ar")))
-            finish()
+            switch(Locale("ar"))
         }
+    }
+
+    private fun switch(locale: Locale) {
+        SwitchLanguageUtils.startSwitchLanguage(locale, 1000)
+        finish()
     }
 }
 

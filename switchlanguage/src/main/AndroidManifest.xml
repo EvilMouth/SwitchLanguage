@@ -2,6 +2,10 @@
           package="com.zyhang.switchlanguage">
 
     <application>
+        <provider
+            android:name=".LifecycleRuntimeContentProvider"
+            android:authorities="${applicationId}.lifecycle-switch-language"
+            android:exported="false"/>
         <activity
             android:name=".SwitchLanguageActivity"
             android:screenOrientation="portrait"

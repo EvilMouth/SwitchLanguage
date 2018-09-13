@@ -1,8 +1,6 @@
 package com.zyhang.switchlanguage;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -43,21 +41,17 @@ public class SwitchLanguageUtils {
     /**
      * 开始切换语言
      *
-     * @param recreateActivity 进行重建的activity
-     * @param locale           目标切换语言
-     * @param delayMillis      动画延时
+     * @param locale      目标切换语言
+     * @param delayMillis 切换动画显示时间
      */
-    public static void startSwitchLanguage(@NonNull Activity recreateActivity, @NonNull Locale locale, @IntRange(from = 700) long delayMillis) {
+    public static void startSwitchLanguage(@NonNull Locale locale, @IntRange(from = 700) long delayMillis) {
         SwitchLanguageHelper.getInstance()
-                .startSwitch(recreateActivity, locale, delayMillis);
-
-        Intent intent = new Intent(recreateActivity, SwitchLanguageActivity.class);
-        recreateActivity.startActivity(intent);
-        recreateActivity.overridePendingTransition(R.anim.switch_b_in, R.anim.switch_a_out);
+                .startSwitch(locale, delayMillis);
     }
 
     /**
-     * 结束切换语言界面
+     * 立刻结束切换语言界面
+     * 无需手动调用
      *
      * @param context context
      */
