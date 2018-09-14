@@ -56,7 +56,7 @@ class SettingActivity : AutoConfigLanguageActivity() {
     }
 
     private fun switch(locale: Locale) {
-        SwitchLanguageUtils.startSwitchLanguage(locale, 1000)
+        SwitchLanguageUtils.startSwitchLanguage(locale)
         finish()
     }
 }
