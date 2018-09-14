@@ -28,14 +28,21 @@ public class SwitchLanguageUtils {
      */
     public static Context configLanguage(@NonNull Context newBase) {
         Configuration configuration = Resources.getSystem().getConfiguration();
-
         Locale locale = SwitchLanguageHelper.getInstance()
                 .getLocale(newBase);
         if (locale != null) {
             configuration.setLocale(locale);
         }
-
         return newBase.createConfigurationContext(configuration);
+    }
+
+    /**
+     * 开始切换语言
+     *
+     * @param locale 目标切换语言
+     */
+    public static void startSwitchLanguage(@NonNull Locale locale) {
+        startSwitchLanguage(locale, 1000);
     }
 
     /**

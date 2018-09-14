@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Switch Language Demo</string>
 
-    <string name="menu_home">首页</string>
-    <string name="menu_category">类目</string>
-    <string name="menu_follow">关注</string>
-    <string name="menu_cart">购物车</string>
-    <string name="menu_account">账户</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_category">Category</string>
+    <string name="menu_follow">Follow</string>
+    <string name="menu_cart">Cart</string>
+    <string name="menu_account">Account</string>
 
-    <string name="setting">设置</string>
+    <string name="setting">Setting</string>
 
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>

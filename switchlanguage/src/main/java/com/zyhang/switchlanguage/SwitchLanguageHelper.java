@@ -37,7 +37,7 @@ class SwitchLanguageHelper {
         mLocale = locale;
         // get the top activity from stack
         Activity topActivity = ActivityDequeHelper.getInstance()
-                .getActivityDeque().getLast();
+                .getCurrentActivityTop();
         // store to sp
         storeLocal(topActivity.getApplicationContext(), locale);
         // delay recreate

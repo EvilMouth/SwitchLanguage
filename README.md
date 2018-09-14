@@ -7,7 +7,7 @@
 
 ## Usage
 
-### 重写Activity
+### 重写Activity attachBaseContext
 ```java
 @Override
 protected void attachBaseContext(Context newBase) {
@@ -17,7 +17,7 @@ protected void attachBaseContext(Context newBase) {
 
 ### 切换语言
 ```kotlin
-SwitchLanguageUtils.startSwitchLanguage(Locale.CHINA, 1000)
+SwitchLanguageUtils.startSwitchLanguage(Locale.ENGLISH)
 ```
 
 ## Installation
