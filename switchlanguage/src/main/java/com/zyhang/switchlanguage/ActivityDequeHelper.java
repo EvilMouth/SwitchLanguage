@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Created by zyhang on 2018/9/13.14:15
@@ -72,7 +73,11 @@ public class ActivityDequeHelper {
      */
     @NonNull
     public Activity getTopActivity() {
-        return mActivityDeque.getFirst();
+        Activity activity = mActivityDeque.peekFirst();
+        if (activity == null) {
+            throw new NoSuchElementException("not allow multi process");
+        }
+        return activity;
     }
 
     /**
