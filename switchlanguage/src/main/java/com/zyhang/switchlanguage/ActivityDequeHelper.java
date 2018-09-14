@@ -5,8 +5,11 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
+import java.util.Iterator;
 
 /**
  * Created by zyhang on 2018/9/13.14:15
@@ -14,8 +17,8 @@ import java.util.ArrayDeque;
 
 public class ActivityDequeHelper {
 
-    @NonNull
     private ArrayDeque<Activity> mActivityDeque = new ArrayDeque<>();
+    private WeakReference<Activity> mCurrentActivity;
 
     private static class LazyLoad {
         private static final ActivityDequeHelper INSTANCE = new ActivityDequeHelper();
@@ -34,7 +37,12 @@ public class ActivityDequeHelper {
                         if (activity instanceof SwitchLanguageActivity) {
                             return;
                         }
-                        mActivityDeque.add(activity);
+                        mActivityDeque.addFirst(activity);
+                    }
+
+                    @Override
+                    public void onActivityResumed(Activity activity) {
+                        mCurrentActivity = new WeakReference<>(activity);
                     }
 
                     @Override
@@ -47,14 +55,54 @@ public class ActivityDequeHelper {
                 });
     }
 
+    /**
+     * getActivityDeque
+     *
+     * @return activity队列
+     */
     @NonNull
     public ArrayDeque<Activity> getActivityDeque() {
         return mActivityDeque;
     }
 
+    /**
+     * getTopActivity
+     *
+     * @return 栈顶activity
+     */
+    @NonNull
+    public Activity getTopActivity() {
+        return mActivityDeque.getFirst();
+    }
+
+    /**
+     * getCurrentActivity
+     *
+     * @return 当前activity
+     */
+    @Nullable
+    public Activity getCurrentActivity() {
+        return mCurrentActivity != null ? mCurrentActivity.get() : null;
+    }
+
+    /**
+     * getCurrentActivityTop
+     *
+     * @return 当前activity / 栈顶activity
+     */
+    @NonNull
+    public Activity getCurrentActivityTop() {
+        Activity current = getCurrentActivity();
+        return current != null ? current : getTopActivity();
+    }
+
+    /**
+     * 重建队列里所有activity
+     */
     public void recreateAll() {
-        for (Activity activity : mActivityDeque) {
-            activity.recreate();
+        Iterator<Activity> iterator = mActivityDeque.descendingIterator();
+        while (iterator.hasNext()) {
+            iterator.next().recreate();
         }
     }
 
