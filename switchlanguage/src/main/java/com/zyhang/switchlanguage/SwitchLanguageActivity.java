@@ -1,5 +1,6 @@
 package com.zyhang.switchlanguage;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -70,6 +71,12 @@ public class SwitchLanguageActivity extends AutoConfigLanguageActivity {
     @Override
     public void onBackPressed() {
         // disable
+    }
+
+    static void start(@NonNull Activity activity) {
+        Intent intent = new Intent(activity, SwitchLanguageActivity.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.switch_b_in, R.anim.switch_a_out);
     }
 
     /**

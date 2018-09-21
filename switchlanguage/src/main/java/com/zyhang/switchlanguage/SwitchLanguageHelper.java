@@ -2,7 +2,6 @@ package com.zyhang.switchlanguage;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -44,9 +43,7 @@ class SwitchLanguageHelper {
         new RecreateHandler(topActivity.getApplicationContext())
                 .sendEmptyMessageDelayed(1, delayMillis);
         // start switch anim
-        Intent intent = new Intent(topActivity, SwitchLanguageActivity.class);
-        topActivity.startActivity(intent);
-        topActivity.overridePendingTransition(R.anim.switch_b_in, R.anim.switch_a_out);
+        SwitchLanguageActivity.start(topActivity);
     }
 
     @Nullable

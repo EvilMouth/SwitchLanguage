@@ -7,7 +7,6 @@ android {
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 27
         versionCode 1
         versionName POM_PUBLISH_VERSION
 
@@ -34,6 +33,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    api 'com.zyhang:myproguard:1.0.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/izyhang/novoda-push/master/gradle/push.gradle'
