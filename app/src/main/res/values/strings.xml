@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Switch Language Demo</string>
+    <string name="app_name" translatable="false">Switch Language Demo</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_category">Category</string>
@@ -9,7 +9,7 @@
 
     <string name="setting">Setting</string>
 
-    <string name="language_chinese">中文</string>
-    <string name="language_english">English</string>
-    <string name="language_arabic">العربية</string>
+    <string name="language_chinese" translatable="false">中文</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_arabic" translatable="false">العربية</string>
 </resources>
