@@ -1,13 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.zyhang.switchlanguage">
-
-    <application>
-        <provider
-            android:name=".LifecycleRuntimeContentProvider"
-            android:authorities="${applicationId}.lifecycle-switch-language"
-            android:exported="false"/>
-        <activity
-            android:name=".SwitchLanguageActivity"
-            android:screenOrientation="portrait"/>
-    </application>
-</manifest>
+<manifest package="com.zyhang.switchlanguage" />

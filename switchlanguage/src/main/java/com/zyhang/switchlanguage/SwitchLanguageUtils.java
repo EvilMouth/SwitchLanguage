@@ -4,12 +4,13 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
 import java.util.Locale;
+
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
 
 import static android.content.pm.ApplicationInfo.FLAG_SUPPORTS_RTL;
 

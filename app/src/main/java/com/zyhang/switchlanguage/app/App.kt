@@ -1,7 +1,7 @@
 package com.zyhang.switchlanguage.app
 
 import android.app.Application
-import android.support.v7.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate
 
 /**
  * Created by zyhang on 2018/9/10.16:24
