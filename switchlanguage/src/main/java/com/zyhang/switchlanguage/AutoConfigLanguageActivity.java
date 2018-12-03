@@ -1,7 +1,7 @@
 package com.zyhang.switchlanguage;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by zyhang on 2018/9/12.10:58

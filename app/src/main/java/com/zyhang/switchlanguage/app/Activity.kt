@@ -1,10 +1,10 @@
 package com.zyhang.switchlanguage.app
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.zyhang.switchlanguage.AutoConfigLanguageActivity
 import com.zyhang.switchlanguage.SwitchLanguageUtils
 import kotlinx.android.synthetic.main.activity_main.*
@@ -61,14 +61,14 @@ class SettingActivity : AutoConfigLanguageActivity() {
     }
 }
 
-class FragmentAdapter(fm: FragmentManager, private val list: List<Fragment>) : FragmentPagerAdapter(fm) {
-    override fun getItem(position: Int): Fragment = list[position]
+class FragmentAdapter(fm: androidx.fragment.app.FragmentManager, private val list: List<androidx.fragment.app.Fragment>) : androidx.fragment.app.FragmentPagerAdapter(fm) {
+    override fun getItem(position: Int): androidx.fragment.app.Fragment = list[position]
 
     override fun getCount(): Int = list.size
 }
 
-fun ViewPager.addOnPageChangeListener(onPageSelected: (position: Int) -> Unit) {
-    addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+fun androidx.viewpager.widget.ViewPager.addOnPageChangeListener(onPageSelected: (position: Int) -> Unit) {
+    addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
         override fun onPageScrollStateChanged(state: Int) {
         }
 
