@@ -25,3 +25,7 @@ SwitchLanguageUtils.startSwitchLanguage(Locale.ENGLISH)
 ```groovy
 implementation 'com.zyhang:switchlanguage:<latest-version>'
 ```
+
+## Depend
+
+- [ActivityDeque](https://github.com/izyhang/ActivityDeque) 堆栈记录

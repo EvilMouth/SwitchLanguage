@@ -1,1 +1,9 @@
-<manifest package="com.zyhang.switchlanguage" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.zyhang.switchlanguage">
+
+    <application>
+        <activity
+            android:name=".SwitchLanguageActivity"
+            android:screenOrientation="portrait"/>
+    </application>
+</manifest>

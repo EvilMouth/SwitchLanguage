@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.zyhang.switchlanguage.AutoConfigLanguageActivity
 import com.zyhang.switchlanguage.SwitchLanguageUtils
+import com.zyhang.switchlanguage.app.R.id.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_setting.*
 import java.util.*

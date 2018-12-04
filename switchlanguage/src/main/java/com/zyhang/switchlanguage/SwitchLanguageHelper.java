@@ -8,6 +8,8 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import com.zyhang.activitydeque.ActivityDeque;
+
 import java.util.Locale;
 import java.util.StringTokenizer;
 
@@ -36,8 +38,11 @@ class SwitchLanguageHelper {
     void startSwitch(@NonNull Locale locale, long delayMillis) {
         mLocale = locale;
         // get the top activity from stack
-        Activity topActivity = ActivityDequeHelper.getInstance()
-                .getCurrentActivityTop();
+        Activity topActivity = ActivityDeque.getInstance().getTopActivity();
+        if (topActivity == null) {
+            System.out.println("ActivityDeque.getInstance().getTopActivity() == null");
+            return;
+        }
         // store to sp
         storeLocal(topActivity.getApplicationContext(), locale);
         // delay recreate
@@ -108,8 +113,7 @@ class SwitchLanguageHelper {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            ActivityDequeHelper.getInstance()
-                    .recreateAll();
+            ActivityDeque.getInstance().recreateAll(SwitchLanguageActivity.class);
             SwitchLanguageUtils.endSwitchLanguage(mApplicationContext);
         }
     }
